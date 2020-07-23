@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>喵</title>
+    <style>
+        body {
+            background: #000;
+            perspective: 1000px;
+            /* 景深 */
+            background-image: url('images/bj.jpg');
+            background-size: 100% auto;
+        }
+        
+        #box {
+            width: 133px;
+            height: 200px;
+            margin: 150px auto;
+            position: relative;
+            transform-style: preserve-3d;
+            transform: rotateX(-20deg);
+            /* X轴位移度数 */
+        }
+        
+        img {
+            position: absolute;
+            /* border: 3px solid hotpink; */
+            -webkit-box-reflect: below 5px -webkit-linear-gradient(top, rgba(0, 0, 0, 0)50%, rgba(0, 0, 0, 0.5)100%);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box">
+        <img src="images/1.jpg" style="transform: rotateY();">
+        <img src="images/2.jpg" style="transform: rotateY();">
+        <img src="images/3.jpg" style="transform: rotateY();">
+        <img src="images/4.jpg" style="transform: rotateY();">
+        <img src="images/5.jpg" style="transform: rotateY();">
+        <img src="images/6.jpg" style="transform: rotateY();">
+        <img src="images/7.jpg" style="transform: rotateY();">
+        <img src="images/8.jpg" style="transform: rotateY();">
+        <img src="images/9.jpg" style="transform: rotateY();">
+        <img src="images/10.jpg" style="transform: rotateY();">
+    </div>
+</body>
+<script>
+    var piectrues = document.getElementsByTagName('img');
+    var deg = 360 / piectrues.length;
+    window.onload = function() {
+        for (var i = 0; i < piectrues.length; i++) {
+            document.querySelectorAll('img')[i].style.transform = 'rotateY(' + i * deg + 'deg) translateZ(350px)';
+            piectrues[i].style.transition = '1s' + (piectrues.length - i) * 0.1 + 's';
+        }
+    }
+    document.onmousedown = function(ev) {
+        var oldX = ev.clientX;
+        var oldY = ev.clientY;
+        var rotateX = -15,
+            rotateY = 0;
+        this.onmousemove = function(ev) {
+            console.log(ev.clientX, ev.clientY);
+            var newX = ev.clientX;
+            var newY = ev.clientY;
+            var minusX = newX - oldX;
+            var minusY = newY - oldY;
+            rotateX -= minusY * 0.2;
+            rotateY += minusX * 0.2;
+            box.style.transform = 'rotateX(' + rotateX + 'deg)rotateY(' + rotateY + "deg)";
+            oldX = newX;
+            oldY = newY;
+            this.onmouseup = function() {
+                this.onmousemove = null;
+                console.log("clear");
+            }
+        }
+    }
+</script>
+
+</html>
